@@ -1,0 +1,162 @@
+{
+  "colorOverridesByNodeId": {},
+  "mindmap": {
+    "version": "1",
+    "title": "Fluxo de Dados: AWS Athena, Glue e S3",
+    "layoutMode": "distributed",
+    "tree": {
+      "id": "root",
+      "label": "Fluxo de Dados S3 → Glue → Athena",
+      "children": [
+        {
+          "id": "s3-storage",
+          "label": "S3: Armazenamento (Data Lake)",
+          "children": [
+            {
+              "id": "s3-nature",
+              "label": "Armazena arquivos brutos (CSV, JSON, Parquet)"
+            },
+            {
+              "id": "s3-org",
+              "label": "Organizado em buckets, objetos e prefixos"
+            },
+            {
+              "id": "s3-schema",
+              "label": "Schema on read: não entende o conteúdo"
+            },
+            {
+              "id": "s3-example",
+              "label": "Exemplo: vendas/ano=2025/mes=11/dia=22/vendas.parquet"
+            }
+          ]
+        },
+        {
+          "id": "glue-catalog",
+          "label": "Glue Data Catalog: Metadados",
+          "children": [
+            {
+              "id": "glue-role",
+              "label": "Guarda schema, localização e partições"
+            },
+            {
+              "id": "glue-hierarchy",
+              "label": "Hierarquia: Catálogo > Database > Table"
+            },
+            {
+              "id": "glue-type",
+              "label": "Tabela externa: DROP não apaga arquivos"
+            },
+            {
+              "id": "glue-pop",
+              "label": "Populado por DDL, Crawler ou ETL"
+            },
+            {
+              "id": "glue-sync",
+              "label": "Partition pruning e MSCK REPAIR TABLE"
+            }
+          ]
+        },
+        {
+          "id": "athena-query",
+          "label": "Athena: Consulta SQL",
+          "children": [
+            {
+              "id": "athena-tech",
+              "label": "Serviço serverless com motor Presto/Trino"
+            },
+            {
+              "id": "athena-catalog",
+              "label": "Usa o catálogo do Glue"
+            },
+            {
+              "id": "athena-billing",
+              "label": "Custo por dados escaneados (bytes lidos)"
+            },
+            {
+              "id": "athena-output",
+              "label": "Resultado gravado em bucket S3 de output"
+            }
+          ]
+        },
+        {
+          "id": "flow-steps",
+          "label": "Fluxo Completo da Consulta",
+          "children": [
+            {
+              "id": "step-1",
+              "label": "1. Arquivo armazenado no S3"
+            },
+            {
+              "id": "step-2",
+              "label": "2. Glue Catalog fornece schema e localização"
+            },
+            {
+              "id": "step-3",
+              "label": "3. Usuário executa SQL no Athena"
+            },
+            {
+              "id": "step-4",
+              "label": "4. Athena lê apenas arquivos necessários no S3"
+            },
+            {
+              "id": "step-5",
+              "label": "5. Resultado gravado no bucket de output"
+            }
+          ]
+        },
+        {
+          "id": "cloud-concepts",
+          "label": "Conceitos de Nuvem",
+          "children": [
+            {
+              "id": "cloud-region",
+              "label": "Tudo deve estar na mesma região"
+            },
+            {
+              "id": "cloud-iam",
+              "label": "Permissão dupla: Catálogo e S3"
+            },
+            {
+              "id": "cloud-model",
+              "label": "Serverless e Pay-as-you-go"
+            },
+            {
+              "id": "cloud-diff",
+              "label": "Data Lake (Schema on read) vs Data Warehouse"
+            }
+          ]
+        },
+        {
+          "id": "optimization",
+          "label": "Otimização e Custo",
+          "children": [
+            {
+              "id": "opt-partition",
+              "label": "Particionamento por pastas no S3"
+            },
+            {
+              "id": "opt-format",
+              "label": "Uso de Parquet/ORC comprimido"
+            },
+            {
+              "id": "opt-query",
+              "label": "Selecionar colunas específicas (evitar SELECT *)"
+            },
+            {
+              "id": "opt-limit",
+              "label": "LIMIT não reduz custo de escaneamento"
+            },
+            {
+              "id": "opt-ctas",
+              "label": "CTAS para materializar dados"
+            },
+            {
+              "id": "opt-workgroup",
+              "label": "Workgroups com limites de bytes"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
